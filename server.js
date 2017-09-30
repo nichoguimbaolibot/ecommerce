@@ -16,6 +16,8 @@ var passport = require("passport");
 
 var secret = require("./config/secret");
 var User = require("./models/user");
+var Category = require("./models/category");
+var Product = require("./models/product");
 
 
 mongoose.Promise = global.Promise;
@@ -46,8 +48,10 @@ app.set("view engine", "ejs");
 
 var mainRoutes = require("./routes/main");
 var userRoutes = require("./routes/user");
+var adminRoutes = require("./routes/admin");
 app.use(mainRoutes);
 app.use(userRoutes);
+app.use(adminRoutes);
 
 
 app.listen(secret.port, function(){
