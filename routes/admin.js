@@ -5,7 +5,7 @@ var Category = require("../models/category");
 
 
 router.get("/add-category", function(req, res, next){
-	res.render("admin/add-category", {message: req.flash("success")});
+	res.render("admin/add-category", {message: req.flash("success"), error: req.flash("error")});
 });
 
 
@@ -14,7 +14,10 @@ router.post("/add-category", function(req, res, next){
 	category.name = req.body.name;
 
 	category.save(function(err, category){
-		if(err) return next(err);
+		if(err){
+			req.flash("error", "The category already exist");
+			return res.redirect("/add-category");
+		}
 
 		req.flash("success", "Successfully added a category");
 		return res.redirect("/add-category");

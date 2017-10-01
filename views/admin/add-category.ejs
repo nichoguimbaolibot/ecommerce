@@ -1,20 +1,24 @@
 <% layout("layout") -%>
 
 <div class="row">
-	<div class="col-lg-6 cold-md-offset-3">
+	<div class="col-lg-6 col-md-offset-3">
 
 		<% if(message.length >0){ %>
-			<div class="alert alert-danger alert-dismissible">
+			<div class="alert alert-success alert-dismissible">
 				<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span>
 					
 				</button>
 				<%= message %>
 			</div>
 		<% } %>
-		<div class="container">
-		<div class="row">
-		<div class="col-md-4"></div>
-		<div class="col-md-4 col-xs-4">
+		<% if(error.length >0){ %>
+			<div class="alert alert-danger alert-dismissible">
+				<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span>
+					
+				</button>
+				<%= error %>
+			</div>
+		<% } %>	
 		<form method="POST">
 		<h1 style="text-align: center;">Add a new Category</h1>
 			<div class="form-group">
@@ -23,8 +27,5 @@
 			</div>
 			<button class="btn btn-success">Submit</button>
 		</form>
-		</div>
-		</div>
-		</div>
 	</div>
 </div>
