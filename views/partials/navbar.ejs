@@ -4,7 +4,7 @@
       <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
         <span class="sr-only">Toggle navigation</span>
       </button>
-      <a class="navbar-brand" href="#">Project name</a>
+      <a class="navbar-brand" href="/">HerShoppe</a>
     </div>
     <form class="navbar-form navbar-left" method="POST" action="/search">
       <div class="form-group">
@@ -42,6 +42,14 @@
           <li><a href="/logout">Logout</a></li>
         </ul>
       </li>
+      <% } %>
+      
+      <% if (user) { %>
+      <li><a href="/cart" class="glyphicon glyphicon-cart"><span class="badge"><%= cart %></span></a></li>
+
+      <% } else { %>
+      <li><a href="/cart" class="glyphicon glyphicon-shopping-cart"><span class="badge">0</span></a></li>
+
       <% } %>
 
     </ul>

@@ -12,13 +12,12 @@ var MongoStore = require("connect-mongo")(session);
 var passport = require("passport");
 
 
-
-
 var secret = require("./config/secret");
 var User = require("./models/user");
 var Category = require("./models/category");
 var Product = require("./models/product");
-
+var Cart = require("./models/cart");
+var cartLength = require("./middlewares/middleware");
 
 mongoose.Promise = global.Promise;
 mongoose.connect(secret.database, {useMongoClient: true});
@@ -42,6 +41,8 @@ app.use(function(req, res, next){
 	res.locals.user = req.user;
 	next();
 });
+
+app.use(cartLength);
 
 app.use(function(req, res, next){
 	Category.find({}, function(err, categories){
