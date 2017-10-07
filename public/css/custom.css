@@ -13,3 +13,13 @@ body {
 #productStyle{
 height:40px;
 }	
+
+#navbar-demo{
+	background-color: pink;
+}
+#navbar-demo a{
+	color: white;
+}
+#navbar-demo a:hover{
+	color: blue;
+}
