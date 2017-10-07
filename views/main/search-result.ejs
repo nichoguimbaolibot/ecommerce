@@ -12,13 +12,13 @@
 	<div class="row">
 	<% data.forEach(function(product){ %>
 		<div class="col-md-4">
-			<a href="/product/<%= product._source._id %>">
+			<a href="/product/<%= product._id %>">
 			<div class="thumbnail">
 				<img src="<%= product._source.image %>">
 				<div class="caption">
 					<%= product._source.category %>
 					<h3><%= product._source.name %></h3>
-					<p><%= product._source.category.name %></p>
+					<p><%= product._type %></p>
 					<p>$<%= product._source.price %></p>
 				</div>
 			</div>

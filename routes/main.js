@@ -51,7 +51,15 @@ stream.on("error", function(err){
 	console.log(err)
 });
 
-router.get("/cart", function(req, res, next){
+router.get("/", function(req, res, next){
+	// if(req.user){
+		paginate(req, res, next);
+	// }else{
+	// res.render("main/home");
+ //   }
+});
+
+router.get("/cart", isCartAccess, function(req, res, next){
 	Cart
 	.findOne({owner : req.user._id})
 	.populate("items.item")
@@ -110,13 +118,6 @@ router.get("/search", function(req, res){
    }
 });
 
-router.get("/", function(req, res, next){
-	if(req.user){
-		paginate(req, res, next);
-	}else{
-	res.render("main/home");
-   }
-});
 
 router.get("/page/:page", function(req, res, next){
 	paginate(req, res, next);
@@ -138,17 +139,33 @@ router.get("/products/:id", function(req, res, next){
 	.populate("category")
 	.exec(function(err, products){
 		if(err) return next(err);
+		console.log(products);
 		res.render("main/category", {products: products});
+
 	});
 });
 
 router.get("/product/:id", function(req, res, next){
-	Product.findById({_id: req.params.id}, function(err, product){
-		if(err) return next(err);
+	Product
+	.findById({_id :req.params.id})
+	.populate("comments")
+	.exec(function(err, product){
+		if(err){
+			console.log(err);
+		}
 		res.render("main/product", {product : product});
 	});
+	// Product.findById({_id: req.params.id}, function(err, product){
+	// 	if(err) return next(err);
+	// });
 });
 
-
+function isCartAccess(req, res, next){
+	if(!(req.isAuthenticated())){
+		req.flash("signin", "You need to be login/signup to do that!");
+		return res.redirect("/login");
+	}
+	return next();
+}
 
 module.exports = router;

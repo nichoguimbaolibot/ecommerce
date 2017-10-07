@@ -7,7 +7,11 @@ var ProductSchema = new Schema({
 	category: { type: Schema.Types.ObjectId, ref: "Category"},
 	name: String,
 	price: Number,
-	image: String
+	image: String,
+	comments:[{
+		type: Schema.Types.ObjectId,
+		ref: "Comment"
+	}]
 });
 
 ProductSchema.plugin(mongoosastic, {

@@ -4,34 +4,58 @@
 <div class="container">
 	<div class="row">
 		<div class="col-md-4">
+			<div style="height: 480px;width: 640px;" class="thumbnail">
 			<img src="<%= product.image %>">
+			</div>
 		</div>
 		<div class="col-md-4">
 			
 		</div>
 		<div class="col-md-4">
+		<div class="text-center">
 			<h3><%= product.name %></h3>
-			<h1><%= product.price %></h1>
+			<h1>$ <%= product.price %></h1>
 			<form method="post">
+				<div class="form-group">
 				<div class="btn-group" role="group" aria-label="...">
 					<input type="hidden" name="quantity" id="quantity" value="1"> 
 					<button type="button" id="minus" class="btn btn-default">-</button>
 					<button type="button" id="total" class="btn btn-default">1</button>
 					<button type="button" id="plus" class="btn btn-default">+</button>
 				</div>
-				<div class="form-group">
+				</div>
 				<input type="hidden" name="product_id" id="quantity" value="<%= product._id %>"> 
 				<input type="hidden" name="priceHidden" id="priceHidden" value="<%= product.price %>"> 
-				<input type="text" name = "item" class="form-control" value="<%= product.name %>">
-				<input type="text" name="priceValue" id="priceValue" class="form-control" value="<%= product.price %>">
+				<div class="form-group">
+				<input type="text" disabled name = "item" class="form-control" value="<%= product.name %>">
 				</div>
-				<% if(user){ %>
-					<button class="btn btn-primary btn-lg">Add to Cart</button>
+				<div class="form-group">
+				<input class="form-control" type="number" name="priceValue" id="priceValue"  value="<%= product.price %>">
+				</div>
+					<% if(user){ %>
+					<div class="form-group">
+					<button class="btn btn-primary form-control"><span class="glyphicon glyphicon-shopping-cart"> </span>ADD TO CART</button>
+					</div>
+					<% } else{ %>
 
-				<% } else{ %>
-				<a href="/signup" class="btn btn-warning btn-lg">You need to signup to buy</a>
-				<% } %>
+				<a href="/signup" class="btn btn-success btn-lg">You need to signup to buy an item!</a>
+					<% } %>
 			</form>
+		</div>
 		</div>		
+	</div>
+	<div class="well">
+	<div class="text-right">
+			<a href="/product/<%= product._id %>/comments/new" class="btn btn-success">Add New Comment</a>
+	</div>
+	<hr>
+	<% product.comments.forEach(function(comment){ %>
+	<div class="row">
+		<div class="col-md-12">
+		<strong><a><%= comment.author.email %></a></strong>
+		<p><%= comment.text %></p>
+		</div>
+	</div>
+	<% }); %>
 	</div>
 </div>

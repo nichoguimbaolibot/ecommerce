@@ -1,7 +1,8 @@
 <% layout("layout") -%>
 
 <div class="row">
-	<div class="col-lg-6 cold-md-offset-3">
+<div class="col-lg-4 col-md-offset-4"></div>
+	<div class="col-lg-4 col-md-offset-4">
 
 		<% if(message.length >0){ %>
 			<div class="alert alert-danger alert-dismissible">
@@ -11,10 +12,14 @@
 				<%= message %>
 			</div>
 		<% } %>
-		<div class="container">
-		<div class="row">
-		<div class="col-md-4"></div>
-		<div class="col-md-4 col-xs-4">
+		<% if(signin.length >0){ %>
+			<div class="alert alert-danger alert-dismissible">
+				<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span>
+					
+				</button>
+				<%= signin %>
+			</div>
+		<% } %>
 		<form action="/login" method="POST">
 		<h1 style="text-align: center;">Login Form</h1>
 			<div class="form-group">
@@ -27,8 +32,5 @@
 			</div>
 			<button class="btn btn-success">Submit</button>
 		</form>
-		</div>
-		</div>
-		</div>
 	</div>
 </div>

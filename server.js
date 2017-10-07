@@ -45,6 +45,7 @@ app.use(function(req, res, next){
 app.use(cartLength);
 
 app.use(function(req, res, next){
+	res.locals.signin = req.flash("signin");
 	Category.find({}, function(err, categories){
 		if(err) return next(err);
 		res.locals.categories = categories;
@@ -59,9 +60,11 @@ var mainRoutes = require("./routes/main");
 var userRoutes = require("./routes/user");
 var adminRoutes = require("./routes/admin");
 var apiRoutes = require("./api/api");
+var commentRoutes = require("./routes/comment");
 app.use(mainRoutes);
 app.use(userRoutes);
 app.use(adminRoutes);
+app.use(commentRoutes);
 app.use("/api", apiRoutes);
 
 
