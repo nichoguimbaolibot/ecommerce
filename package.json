@@ -21,6 +21,8 @@
     "express-session": "^1.15.6",
     "faker": "^4.1.0",
     "locus": "^2.0.1",
+    "method-override": "^2.3.10",
+    "moment": "^2.18.1",
     "mongoosastic": "^4.3.0",
     "mongoose": "^4.11.13",
     "morgan": "^1.8.2",

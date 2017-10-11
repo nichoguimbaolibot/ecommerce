@@ -1,0 +1,35 @@
+<% layout("layout") -%>
+
+<div class="container">
+	<div class="row">
+		<div class="col-md-12 col-sm-12 col-xs-12">
+  <div class="form-group">
+  	<a href="/users/new" class="btn btn-success">Add New User</a>
+  </div>
+	<table class="table table-bordered">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Email</th>
+        <th>Address</th>
+        <th>Admin Status</th>
+		<th></th>
+      </tr>
+    </thead>
+    <tbody>
+  	<% users.forEach(function(user){ %>
+   
+      <tr>
+        <td><%= user.profile.name %></td>
+        <td><%= user.email %></td>
+        <td><%= user.address %></td>
+        <td><%= user.isAdmin %></td>
+        <td><a class="btn btn-info form-control" href="/users/<%= user._id %>">Show</a></td>
+      </tr>
+      <% }); %>
+    </tbody>
+  </table>
+
+		</div>
+	</div>
+</div>

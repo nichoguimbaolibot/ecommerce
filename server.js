@@ -10,6 +10,7 @@ var cookieParser = require("cookie-parser");
 var flash = require("express-flash");
 var MongoStore = require("connect-mongo")(session);
 var passport = require("passport");
+var methodOverride = require("method-override");
 
 
 var secret = require("./config/secret");
@@ -24,6 +25,7 @@ mongoose.connect(secret.database, {useMongoClient: true});
 
 // Middleware
 app.use(express.static(__dirname + "/public"));
+app.use(methodOverride("_method"));
 app.use(morgan("dev"));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended : true}));
@@ -41,7 +43,7 @@ app.use(function(req, res, next){
 	res.locals.user = req.user;
 	next();
 });
-
+app.locals.moment = require("moment");
 app.use(cartLength);
 
 app.use(function(req, res, next){

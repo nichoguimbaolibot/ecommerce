@@ -4,6 +4,7 @@ var router = express.Router();
 var User = require("../models/user");
 var Product = require("../models/product");
 var Cart = require("../models/cart");
+var Category = require("../models/category");
 
 function paginate(req, res, next){
 		var perPage = 9;
@@ -127,11 +128,6 @@ router.get("/about", function(req, res){
 	res.render("main/about");
 });
 
-router.get("/users", function(req, res){
-	User.find({}, function(err, users){
-		res.send(users);
-	});
-});
 
 router.get("/products/:id", function(req, res, next){
 	Product
@@ -142,6 +138,33 @@ router.get("/products/:id", function(req, res, next){
 		console.log(products);
 		res.render("main/category", {products: products});
 
+	});
+});
+router.get("/product/new", function(req, res ,next){
+	Category.find({}, function(err, categories){
+		if(err){
+			console.log(err);
+		} else {
+			res.render("main/product-new", {categories: categories});
+		}
+	});
+});
+
+router.post("/product", function(req, res, next){
+	var price = parseFloat(req.body.price);
+	var newProduct = {
+		category: req.body.category,
+		name: req.body.name,
+		price: price,
+		image: req.body.image
+	};
+	Product.create(newProduct, function(err, product){
+		if(err){
+			console.log(err);
+		} else{
+			console.log(product);
+			res.redirect("/");
+		}
 	});
 });
 

@@ -3,7 +3,7 @@
 <div class="container">
 
 	<div class="row">
-		<div class="col-sm-6 col-md-4">
+		<div class=" col-xs-12 col-sm-12 col-md-3">
 			<img class="img-circle img-responsive img-center" src="<%= user.profile.picture %>" alt="">
 			<br>
 			<p>Name: <%= user.profile.name %></p>
@@ -13,7 +13,36 @@
 			<% } else { %>
 			<p>Address: <%= user.address %></p>
 			<% } %>
-			<a class="btn btn-warning" href="/edit-profile">Edit Profile</a>
+			<div class="form-group">
+			<a class="form-control btn btn-warning" href="/edit-profile">Edit Profile</a>
+			</div>
+			<% if(user.isAdmin || user.superUser === true){ %>
+				<div class="form-group">
+					<label class="text-center form-control">Admin Settings: </label>
+						<a href="/users" class="form-control btn btn-success">Users</a>
+						<a href="/add-category" class="form-control btn btn-success">Add Category</a>					
+						<a href="/product/new" class="form-control btn btn-success">Add Product</a>
+				</div>
+			<% } %>
 		</div>
+		
+		<div class="col-sm-12 col-xs-12 col-md-9">
+			<table>
+				<thead>
+				</thead>
+				<tbody>
+					<tr>
+						
+					</tr>
+					<tr>
+						
+					</tr>
+					<tr>
+
+					</tr>
+				</tbody>
+			</table>
+		</div>
+		
 	</div>
 </div>

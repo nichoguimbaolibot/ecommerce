@@ -15,11 +15,32 @@ height:40px;
 }	
 
 #navbar-demo{
-	background-color: pink;
+	background-color: white;
 }
 #navbar-demo a{
-	color: white;
+	color: black;
 }
 #navbar-demo a:hover{
-	color: blue;
+	color: pink;
+	background-color: white;
+}
+
+footer{
+	width: 100%;
+	background-color: #F0F0F0;
+}
+
+.image {
+  width: 100%;
+  height: 250px;
+  margin-bottom:150px;
+  background-size: cover;
+  background-position: center center;
+}
+
+.thumbnail img{
+	width: 100%;
+}
+.thumbnail{
+	padding: 0;
 }

@@ -3,15 +3,12 @@
 
 <div class="container">
 	<div class="row">
-		<div class="col-md-4">
-			<div style="height: 480px;width: 640px;" class="thumbnail">
+		<div class="col-md-9">
+			<div class="thumbnail">
 			<img src="<%= product.image %>">
 			</div>
 		</div>
-		<div class="col-md-4">
-			
-		</div>
-		<div class="col-md-4">
+		<div class="col-md-3">
 		<div class="text-center">
 			<h3><%= product.name %></h3>
 			<h1>$ <%= product.price %></h1>
@@ -30,15 +27,16 @@
 				<input type="text" disabled name = "item" class="form-control" value="<%= product.name %>">
 				</div>
 				<div class="form-group">
-				<input class="form-control" type="number" name="priceValue" id="priceValue"  value="<%= product.price %>">
+				<input class="form-control" type="number" name="priceValue" id="priceValue" step="0.01"  value="<%= product.price %>">
 				</div>
 					<% if(user){ %>
 					<div class="form-group">
 					<button class="btn btn-primary form-control"><span class="glyphicon glyphicon-shopping-cart"> </span>ADD TO CART</button>
 					</div>
 					<% } else{ %>
-
-				<a href="/signup" class="btn btn-success btn-lg">You need to signup to buy an item!</a>
+				<div class="form-group">
+				<a href="/signup" class="btn btn-success form-control">Signup to Buy</a>
+				</div>
 					<% } %>
 			</form>
 		</div>
@@ -52,6 +50,9 @@
 	<% product.comments.forEach(function(comment){ %>
 	<div class="row">
 		<div class="col-md-12">
+		<div class="pull-right">
+			<%= moment(comment.createdA).fromNow() %>
+		</div>
 		<strong><a><%= comment.author.email %></a></strong>
 		<p><%= comment.text %></p>
 		</div>

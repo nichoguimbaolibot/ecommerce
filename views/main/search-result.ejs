@@ -2,25 +2,28 @@
 <div class="container">
 
 <% if(data.length === 0){ %>
-<div class="col-md-4"></div>
-<div class="col-md-4">
-	<h3>Search not found</h3>
+<div class="col-md-4 col-sm-6 col-xs-6"></div>
+<div class="col-md-4 col-sm-6 col-xs-6">
+	<h3 class="text-center">Search not found</h3>
 </div>
 <div class="col-md-4"></div>
 <% } else{ %>
 	<h3>Results for <%= query %></h3>
 	<div class="row">
 	<% data.forEach(function(product){ %>
-		<div class="col-md-4">
-			<a href="/product/<%= product._id %>">
+		<div class="col-md-4 col-sm-6 col-xs-6">
+			<a style="text-decoration: none;" href="/product/<%= product._id %>">
+			<div class="image">
 			<div class="thumbnail">
 				<img src="<%= product._source.image %>">
 				<div class="caption">
-					<%= product._source.category %>
+				<div class="text-center">
 					<h3><%= product._source.name %></h3>
 					<p><%= product._type %></p>
 					<p>$<%= product._source.price %></p>
 				</div>
+				</div>
+			</div>
 			</div>
 			</a>
 		</div>

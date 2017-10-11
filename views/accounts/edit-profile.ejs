@@ -14,6 +14,14 @@
 				<%= message %>
 			</div>
 		<% } %>
+		<% if(errors.length >0){ %>
+			<div class="alert alert-danger alert-dismissible">
+				<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span>
+					
+				</button>
+				<%= errors %>
+			</div>
+		<% } %>
 		</div>
 		</div>
 		</div>
@@ -31,6 +39,42 @@
 			<label for="name">Address:</label>
 			<input class="form-control" value="<%= user.address %>" type="text" name="address" placeholder="address">
 			</div>
+			<label >Birthdate: </label>	
+			<div class="form-group">
+				<select name="year" id="year">
+				<option selected value="<%= user.birthdate.getFullYear() %>" ><%= user.birthdate.getFullYear() %></option>
+				</select>
+				<select  name="month" id="month">
+				<option selected value="<%= user.birthdate.getMonth() + 1 %>"><%= getMonth %></option>
+					<option value="01">January</option>
+					<option value="02">February</option>
+					<option value="03">March</option>
+					<option value="04">April</option>
+					<option value="05">May</option>
+					<option value="06">June</option>
+					<option value="07">July</option>
+					<option value="08">August</option>
+					<option value="09">September</option>
+					<option value="10">October</option>
+					<option value="11">November</option>
+					<option value="12">December</option>
+				</select>
+				<select name="day" id="day">
+				<option selected value="<%= user.birthdate.getDate() %>"><%= user.birthdate.getDate() %></option>
+				</select>
+				<div class="form-group">
+				<label for="currentPass">Current Password: </label>
+					<input class="form-control" type="password" name="currentPass" placeholder="current password">
+				</div>
+				<div class="form-group">
+				<label for="currentPass">New Password: </label>
+					<input class="form-control" type="password" name="password" placeholder="current password">
+				</div>
+				<div class="form-group">
+				<label for="currentPass">Confirm Password: </label>
+					<input class="form-control" type="password" name="confirmPass" placeholder="current password">
+				</div>
+			</div>		
 			<button class="btn btn-success">Submit</button>
 		</form>
 		</div>
@@ -38,3 +82,11 @@
 		</div>
 	</div>
 </div>
+<script type="text/javascript">
+		for(var i = 2050; i >= 1950; i--){
+			$("#year").append('<option value="' + i + '">'+ i + '</option>');
+		}
+		for(var i = 31; i >= 1; i--){
+			$("#day").append('<option value="' + i + '">'+ i + '</option>');
+		}
+</script>
