@@ -136,8 +136,10 @@ router.get("/products/:id", function(req, res, next){
 	.exec(function(err, products){
 		if(err) return next(err);
 		console.log(products);
-		res.render("main/category", {products: products});
-
+		Category.findById(req.params.id, function(err, category){
+			if(err) return next(err);
+		res.render("main/category", {products: products, category: category});
+		});
 	});
 });
 router.get("/product/new", function(req, res ,next){
@@ -151,7 +153,7 @@ router.get("/product/new", function(req, res ,next){
 });
 
 router.post("/product", function(req, res, next){
-	var price = parseFloat(req.body.price);
+	var price = parseFloat(req.body.price).toFixed(2);
 	var newProduct = {
 		category: req.body.category,
 		name: req.body.name,

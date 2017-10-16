@@ -1,0 +1,21 @@
+<% layout("layout")	-%>
+
+
+<div class="container">
+	<div class="row">
+		<div class="col-md-4 col-xs-4"></div>
+		<div class="col-md-4 col-xs-4">
+			<h1>Edit Category</h1>
+			<form action="/edit-category/<%= category._id %>?_method=PUT" method="POST">
+			<div class="form-group">
+				<input class="form-control" type="text" name="category[name]" value="<%= category.name %>">
+			</div>
+				<input type="hidden" name="id" value="<%= category._id %>">
+				<button class="btn btn-success form-control">SUBMIT</button> 
+			</form>
+			<form action="/edit-category/<%= category._id %>?_method=DELETE" method="POST">
+				<button class="btn btn-danger form-control">REMOVE</button>
+			</form>
+		</div>
+	</div>
+</div>

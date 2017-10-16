@@ -6,6 +6,14 @@
   <div class="form-group">
   	<a href="/users/new" class="btn btn-success">Add New User</a>
   </div>
+  <div class="form-group">
+    <form action="/users" method="GET" class="form-inline">
+              <div class="form-group">
+                <input type="text" name="search" placeholder="User search...." class="form-control">
+                <input type="submit" value="Search" class="btn btn-md btn-default">
+              </div>
+    </form>
+  </div>
 	<table class="table table-bordered">
     <thead>
       <tr>

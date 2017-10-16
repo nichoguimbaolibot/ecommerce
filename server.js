@@ -60,12 +60,14 @@ app.set("view engine", "ejs");
 
 var mainRoutes = require("./routes/main");
 var userRoutes = require("./routes/user");
-var adminRoutes = require("./routes/admin");
+var adminUserRoutes = require("./routes/admin-user");
 var apiRoutes = require("./api/api");
 var commentRoutes = require("./routes/comment");
+var adminProductRoutes = require("./routes/admin-product");
 app.use(mainRoutes);
 app.use(userRoutes);
-app.use(adminRoutes);
+app.use(adminUserRoutes);
+app.use(adminProductRoutes);
 app.use(commentRoutes);
 app.use("/api", apiRoutes);
 

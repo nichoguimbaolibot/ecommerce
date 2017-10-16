@@ -1,0 +1,41 @@
+<% layout("layout") -%>
+
+<div class="container">
+	<div class="row">
+	<div class="col-md-4 col-xs-4"></div>
+	<div class="col-md-4 col-xs-4">
+	<% if(signin && signin.length >0){ %>
+			<div class="alert alert-danger alert-dismissible">
+				<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span>
+					
+				</button>
+				<%= signin %>
+			</div>
+		<% } %>
+	<div class="text-center">
+		<form action="/product/admin/<%= product._id %>?_method=PUT" method="POST">
+			<h1>Edit <%= product.name %></h1>
+			<div class="form-group">
+			<select class="form-control" name="category">
+			<% categories.forEach(function(category){ %>
+				<option value="<%= category._id %>"><%= category.name %></option>
+			<% }); %>
+			</select>
+			</div>
+			<div class="form-group">
+			<input class="form-control" type="text" value="<%= product.name %>" name="name" placeholder="name">
+			</div>
+			<div class="form-group">
+				<input class="form-control" value="<%= product.price %>" step="0.01" type="number" name="price" placeholder="price">
+			</div>
+			<div class="form-group">
+				<input class="form-control" type="text" name="image" value="<%= product.image %>" placeholder="image">
+			</div>
+			<div class="form-group">
+			<button class="btn btn-primary form-control">Submit</button>
+			</div>
+		</form>
+	</div>
+	</div>
+	</div>
+</div>

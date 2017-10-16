@@ -11,7 +11,7 @@
 		<div class="col-md-3">
 		<div class="text-center">
 			<h3><%= product.name %></h3>
-			<h1>$ <%= product.price %></h1>
+			<h1 style="color: EA1B82;">$ <%= product.price.toFixed(2) %></h1>
 			<form method="post">
 				<div class="form-group">
 				<div class="btn-group" role="group" aria-label="...">
@@ -31,7 +31,7 @@
 				</div>
 					<% if(user){ %>
 					<div class="form-group">
-					<button class="btn btn-primary form-control"><span class="glyphicon glyphicon-shopping-cart"> </span>ADD TO CART</button>
+					<button id="pink" class="btn form-control"><span class="glyphicon glyphicon-shopping-cart"> </span>ADD TO CART</button>
 					</div>
 					<% } else{ %>
 				<div class="form-group">
@@ -50,11 +50,20 @@
 	<% product.comments.forEach(function(comment){ %>
 	<div class="row">
 		<div class="col-md-12">
+		<div class="form-group">
 		<div class="pull-right">
 			<%= moment(comment.createdA).fromNow() %>
 		</div>
+		</div>
+		
+			<a href="/product/<%= product._id %>/comments/<%= comment._id %>/edit" class="btn btn-warning">Edit</a>
+		
+		<div class="form-group">
 		<strong><a><%= comment.author.email %></a></strong>
+		</div>
+		<div class="form-group">
 		<p><%= comment.text %></p>
+		</div>
 		</div>
 	</div>
 	<% }); %>

@@ -5,7 +5,15 @@ var User = require("../models/user");
 var Product = require("../models/product");
 var Comment = require("../models/comment");
 
-router.get("/product/:id/comments/new", function(req, res){
+function isUserLogin(req, res, next){
+	if(req.isAuthenticated()){
+		return next();
+	}
+	req.flash("signin", "You must login to do that");
+	return res.redirect("/login");
+}
+
+router.get("/product/:id/comments/new", isUserLogin, function(req, res){
 	Product.findById(req.params.id, function(err, foundProduct){
 		if(err){
 			console.log(err);
@@ -15,7 +23,7 @@ router.get("/product/:id/comments/new", function(req, res){
 	});
 });
 
-router.post("/product/:id/comments", function(req, res){
+router.post("/product/:id/comments", isUserLogin, function(req, res){
 	Product.findById(req.params.id, function(err, foundProduct){
 		if(err){
 			console.log(err);
@@ -30,12 +38,31 @@ router.post("/product/:id/comments", function(req, res){
 				foundProduct.comments.push(comment);
 				foundProduct.save();
 				console.log(comment);
-				res.redirect("/product/" + foundProduct._id);
+				return res.redirect("/product/" + foundProduct._id);
 			}
 		});
 		}
 	});
 });
+
+
+router.get("/product/:id/comments/:comment_id/edit", function(req, res){
+	Comment.findById(req.params.comment_id, function(err, comment){
+		if(err) return next(err);
+		res.render("comments/edit", {product_id: req.params.id, comment : comment});
+	});
+});
+
+router.put("/product/:id/comments/:comment_id", function(req, res){
+	Comment.findByIdAndUpdate(req.params.comment_id, req.body.comment, function(err, comment){
+		if(err){
+			console.log(err);
+		} else{
+			return res.redirect("/product/" + req.params.id);
+		}
+	});
+});
+
 
 
 module.exports = router;

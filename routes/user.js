@@ -40,7 +40,6 @@ router.post("/signup", function(req, res, next){
 		var user = new User();
 		user.profile.name = req.body.firstName + " " + req.body.lastName;
 		user.email = req.body.email;
-		user.superUser = true;
 		user.profile.picture = user.gravatar();
 		user.birthdate = new Date(req.body.year + "-" + req.body.month + "-" + req.body.day);
 		if(!(req.body.password === req.body.confirmPassword)){
@@ -92,7 +91,6 @@ router.post("/edit-profile", function(req, res, next){
 	User.findOne({_id: req.user._id}, function(err, user){
 		if(err) return next(err);
 
-		if(req.body.name) user.profile.name = req.body.name;
 		if(req.body.address) user.address = req.body.address;
 		if(req.body.month && req.body.day && req.body.year){
 			user.birthdate = new Date(req.body.year + "-" + req.body.month + "-" + req.body.day);
