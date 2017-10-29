@@ -7,7 +7,7 @@ var ProductSchema = new Schema({
 	category: { type: Schema.Types.ObjectId, ref: "Category"},
 	name: String,
 	price: Number,
-	image: String,
+	image: {type : String, default: "https://lol.gamepedia.com/media/lol.gamepedia.com/d/d4/Logo.jpg"},
 	comments:[{
 		type: Schema.Types.ObjectId,
 		ref: "Comment"

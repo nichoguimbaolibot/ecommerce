@@ -25,8 +25,13 @@ height:40px;
 	color: black;
 }
 #navbar-demo a:hover{
-	color: #EA1B82;
-	background-color: white;
+	color: white;
+	background-color: #EA1B82;
+}
+
+#navbar-demo li a:hover{
+	color: white;
+	background-color: #EA1B82;
 }
 
 #pink{
@@ -49,9 +54,15 @@ footer{
   background-position: center center;
 }
 
+#pink-hover{
+	color:#696969;
+}
+
 #pink-hover:hover{
   color: #EA1B82;
 }
+
+
 
 .thumbnail img{
 	width: 100%;

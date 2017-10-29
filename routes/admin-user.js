@@ -22,20 +22,19 @@ function adminAuthentication(req, res, next){
 	
 }
 
-function paginate(req, res, next){
+function userPaginate(req, res, next){
 		var perPage = 9;
 		var page = req.params.page;
-		Product
-		.find()
+		User
+		.find({superUser: false})
 		.skip( perPage * page)
 		.limit( perPage )
-		.populate("category")
-		.exec(function(err, product){
+		.exec(function(err, users){
 				if(err) return next(err);
-			Product.count().exec(function(err, count){
+			User.count().exec(function(err, count){
 				if(err) return next(err);
-				res.render("admin/product", {
-					product: product,
+				res.render("admin/users", {
+					users: users,
 					pages: count / perPage
 				});
 
@@ -46,23 +45,39 @@ function paginate(req, res, next){
 router.get("/users", adminAuthentication, function(req, res, next){
 	if(req.query.search){
     const regex = new RegExp(escapeRegex(req.query.search), "gi");
-    User.find({name: regex, superUser: false}, function(err, users){
-      if(err){
-        console.log(err);
-       return res.redirect("/users");
-      }
-      else{
-        res.render("admin/users", {users : users});
-      }
-    });
+    // User.find({name: regex, superUser: false}, function(err, users){
+    //   if(err){
+    //     console.log(err);
+    //    return res.redirect("/users");
+    //   }
+    //   else{
+    //     res.render("admin/users", {users : users});
+    //   }
+    // });
+    var perPage = 9;
+		var page = req.params.page;
+		User
+		.find({superUser: false, name: regex})
+		.skip( perPage * page)
+		.limit( perPage )
+		.exec(function(err, users){
+				if(err) return next(err);
+			User.count().exec(function(err, count){
+				if(err) return next(err);
+				res.render("admin/users", {
+					users: users,
+					pages: count / perPage
+				});
+
+			});
+		});
   } else{
-	User.find({superUser: false}, function(err, users){
-		if(err){
-			console.log(err);
-		} 
-		res.render("admin/users", {users : users});
-	});
+	userPaginate(req, res, next);
 	}
+});
+
+router.get("users/page/:page", function(req, res, next){
+	userPaginate(req, res, next);
 });
 
 router.get("/users/new", adminAuthentication, function(req, res, next){

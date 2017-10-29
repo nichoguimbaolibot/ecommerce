@@ -17,10 +17,23 @@
 			<div class="thumbnail">
 				<img src="<%= product._source.image %>">
 				<div class="caption">
-				<div class="text-center">
+				<div class="text-center" id="pink-hover">
 					<h3><%= product._source.name %></h3>
 					<p><%= product._type %></p>
 					<p>$<%= product._source.price %></p>
+				</div>
+				<div class="text-center">
+					<form action="/product/<%= product._id %>" method="POST">
+					<input type="hidden" name="product_id" value="<%= product._id %>">
+					<input type="hidden" name="name" value="<%= product._source.name %>">
+					<input type="hidden" name="priceValue" value="<%= product._source.price %>">
+					<input type="hidden" name="quantity" value="1">
+					<% if(user){ %>
+					<button id="pink" class="btn"><span class="glyphicon glyphicon-shopping-cart"> </span>ADD TO CART</button>
+					<% } else{ %>
+					<a id="pink" href="/signup" class="btn">Signup to Buy</a>
+					<% } %>
+			</form>
 				</div>
 				</div>
 			</div>

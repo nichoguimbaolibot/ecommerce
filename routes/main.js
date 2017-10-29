@@ -27,6 +27,31 @@ function paginate(req, res, next){
 		});
 }
 
+function categoryPaginate(req, res, next){
+		var perPage = 9;
+		var page = req.params.page;
+		Product
+		.find({category : req.params.id})
+		.skip( perPage * page)
+		.limit( perPage )
+		.populate("category")
+		.exec(function(err, products){
+				if(err) return next(err);
+		Category.findById(req.params.id, function(err, category){
+				if(err) return next(err);
+		Product.count({category: req.params.id}).exec(function(err, count){
+				if(err) return next(err);
+				
+				res.render("main/category", {
+					products: products,
+					category: category,
+					pages: count / perPage
+					});
+				});
+			});
+		});
+}
+
 Product.createMapping(function(err, mapping){
 	if(err){
 		console.log("error creating mapping");
@@ -73,7 +98,36 @@ router.get("/cart", isCartAccess, function(req, res, next){
 	});
 });
 
+router.get("/product/new", function(req, res ,next){
+	Category.find({}, function(err, categories){
+		if(err){
+			console.log(err);
+		} else {
+			res.render("main/product-new", {categories: categories});
+		}
+	});
+});
+
+router.post("/product", function(req, res, next){
+	var price = parseFloat(req.body.price).toFixed(2);
+	var newProduct = {
+		category: req.body.category,
+		name: req.body.name,
+		price: price,
+		image: req.body.image
+	};
+	Product.create(newProduct, function(err, product){
+		if(err){
+			console.log(err);
+		} else{
+			console.log(product);
+			res.redirect("/product");
+		}
+	});
+});
+
 router.post("/product/:product_id", function(req, res, next){
+	if(req.user._id){
 	Cart.findOne({owner : req.user._id}, function(err, cart){
 		cart.items.push({
 			item: req.body.product_id,
@@ -83,9 +137,13 @@ router.post("/product/:product_id", function(req, res, next){
 		cart.total = (cart.total + parseFloat(req.body.priceValue)).toFixed(2);
 		cart.save(function(err){
 			if(err) return next(err);
-			return res.redirect("/product/" + req.body.product_id);
+			return res.redirect("back");
+			});
 		});
-	});
+	} else{
+		req.flash("message", "You need to signup in order to do that");
+		return res.redirect("/signup");	
+	}
 });
 
 router.post("/remove", function(req, res, next){
@@ -128,47 +186,47 @@ router.get("/about", function(req, res){
 	res.render("main/about");
 });
 
+router.get("/shipping-policy", function(req, res){
+	res.render("main/shipping");
+});
+
+router.get("/return-policy", function(req, res){
+	res.render("main/return");
+});
+
+router.get("/privacy-policy", function(req, res){
+	res.render("main/privacy");
+});
+
+router.get("/terms-condition", function(req, res){
+	res.render("main/terms");
+});
+
+router.get("/payment-methods", function(req, res){
+	res.render("main/payment-methods");
+});
+
 
 router.get("/products/:id", function(req, res, next){
-	Product
-	.find({ category: req.params.id})
-	.populate("category")
-	.exec(function(err, products){
-		if(err) return next(err);
-		console.log(products);
-		Category.findById(req.params.id, function(err, category){
-			if(err) return next(err);
-		res.render("main/category", {products: products, category: category});
-		});
-	});
-});
-router.get("/product/new", function(req, res ,next){
-	Category.find({}, function(err, categories){
-		if(err){
-			console.log(err);
-		} else {
-			res.render("main/product-new", {categories: categories});
-		}
-	});
+	// Product
+	// .find({ category: req.params.id})
+	// .populate("category")
+	// .exec(function(err, products){
+	// 	if(err) return next(err);
+	// 	console.log(products);
+	// 	Category.findById(req.params.id, function(err, category){
+	// 		if(err) return next(err);
+	// 	res.render("main/category", {products: products, category: category});
+	// 	});
+	// });
+
+	categoryPaginate(req, res, next);
 });
 
-router.post("/product", function(req, res, next){
-	var price = parseFloat(req.body.price).toFixed(2);
-	var newProduct = {
-		category: req.body.category,
-		name: req.body.name,
-		price: price,
-		image: req.body.image
-	};
-	Product.create(newProduct, function(err, product){
-		if(err){
-			console.log(err);
-		} else{
-			console.log(product);
-			res.redirect("/");
-		}
-	});
+router.get("/products/:id/page/:page", function(req, res, next){
+	categoryPaginate(req, res, next);
 });
+
 
 router.get("/product/:id", function(req, res, next){
 	Product

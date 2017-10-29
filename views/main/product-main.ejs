@@ -33,9 +33,22 @@
 				<img src="<%= product.image %>">
 				<div class="caption">
 				<div id="pink-hover" class="text-center">
-					<h3><%= product.name %></h3>
+					<h4><%= product.name %></h4>
 					<p><%= product.category.name %></p>
 					<p><strong>Php<%= product.price.toFixed(2) %></strong></p>
+				</div>
+				<div class="text-center">
+					<form action="/product/<%= product._id %>" method="POST">
+					<input type="hidden" name="product_id" value="<%= product._id %>">
+					<input type="hidden" name="name" value="<%= product.name %>">
+					<input type="hidden" name="priceValue" value="<%= product.price %>">
+					<input type="hidden" name="quantity" value="1">
+					<% if(user){ %>
+					<button id="pink" class="btn"><span class="glyphicon glyphicon-shopping-cart"> </span>ADD TO CART</button>
+					<% } else{ %>
+				<a id="pink" href="/signup" class="btn">Signup to Buy</a>
+					<% } %>
+			</form>
 				</div>
 				</div>
 			</div>

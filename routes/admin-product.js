@@ -96,7 +96,7 @@ router.get("/product", adminAuthentication, function(req, res, next){
 		.populate("category")
 		.exec(function(err, product){
 				if(err) return next(err);
-			Product.count().exec(function(err, count){
+			Product.count({name: regex}).exec(function(err, count){
 				if(err) return next(err);
 				res.render("admin/product", {
 					product: product,
