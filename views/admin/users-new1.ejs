@@ -1,0 +1,87 @@
+<% layout("layout") -%>
+
+
+	<div class="row">
+		<div class="col-lg-6 cold-md-offset-3">
+		<div class="row">
+		<div class="col-md-3 col-sm-3"></div>
+		<div class="col-md-6 col-sm-6 text-center">
+		<% if(errors.length >0){ %>
+			<div class="alert alert-danger alert-dismissible">
+				<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span>
+					
+				</button>
+				<%= errors %>
+			</div>
+		<% } %>
+		</div>
+		</div>
+		<div class="container">
+		<div class="row">
+		<div class="col-md-4"></div>
+		<div class="col-md-4">
+		<form action="/users1" method="POST">
+		<h1 style="text-align: center; margin-top: 0;">Signup Form</h1>
+			<div class="form-group">
+				<label for="name">First name:</label>
+				<input id ="first" class="form-control" type="text" name="firstName" placeholder="first name">
+			</div>
+			<div class="form-group">
+				<label for="name">Middle name:</label>
+				<input id="middle" class="form-control" type="text" name="middleName" placeholder="last name">
+			</div>
+			<div class="form-group">
+				<label for="name">Last name:</label>
+				<input id="last" class="form-control" type="text" name="lastName" placeholder="last name">
+			</div>
+			<label >Birthdate: </label>	
+			<div class="form-group">
+				<select class="btn btn-default" name="year" id="year">	
+				</select>
+				<select class="btn btn-default"  name="month" id="month">
+					<option value="01">January</option>
+					<option value="02">February</option>
+					<option value="03">March</option>
+					<option value="04">April</option>
+					<option value="05">May</option>
+					<option value="06">June</option>
+					<option value="07">July</option>
+					<option value="08">August</option>
+					<option value="09">September</option>
+					<option value="10">October</option>
+					<option value="11">November</option>
+					<option value="12">December</option>
+				</select>
+				<select class="btn btn-default" name="day" id="day">
+					
+				</select>
+			</div>		
+			<div class="form-group text-center">
+			<label for="admin">User Privileges: 
+				<select name="admin" class="form-control">
+					<option value="false">User</option>
+					<option value="true">Administrator</option>
+				</select>
+			</label>
+			</div>
+			<div class="form-group">
+			<div class="text-center">
+			<button class="btn btn-success form-control">Submit</button>
+			</div>
+			</div>
+		</form>
+		</div>
+		</div>
+		</div>
+		</div>
+	</div>		
+	</div>
+	<script type="text/javascript">
+		for(var i = (new Date).getFullYear(); i >= 1905; i--){
+			$("#year").append('<option value="' + i + '">'+ i + '</option>');
+		}
+		for(var i = 31; i >= 1; i--){
+			$("#day").append('<option value="' + i + '">'+ i + '</option>');
+		}
+	</script>
+

@@ -5,6 +5,7 @@
 		<div class="col-md-12 col-sm-12 col-xs-12">
   <div class="form-group">
   	<a href="/users/new" class="btn btn-success">Add New User</a>
+    <a href="/backup" class="btn btn-success">Backup</a>
   </div>
   <div class="form-group">
     <form action="/users" method="GET" class="form-inline">
@@ -14,30 +15,52 @@
               </div>
     </form>
   </div>
-	<table class="table table-bordered">
+  <div class="form-group">
+  <form action="/users" method="GET">
+    Sort by: <select class="btn btn-default" name="sort">
+      <option value="name">Name</option>
+      <option value="email">Email</option>
+      <option value="account">Account Type</option>
+    </select>
+    <button class="btn btn-default">Go</button>
+    </form>
+  </div>
+	<table class="table table-bordered" border="1">
     <thead>
       <tr>
         <th>Name</th>
         <th>Email</th>
         <th>Address</th>
-        <th>Admin Status</th>
-		<th></th>
+        <th>Account Type</th>
+		<th>SHOW</th>
       </tr>
     </thead>
-    <tbody>
   	<% users.forEach(function(user){ %>
+    <tr>
    
-      <tr>
+      
         <td><%= user.profile.name %></td>
         <td><%= user.email %></td>
+        <% if(user.address === undefined){ %>
+        <td>No address</td>
+        <% } else{ %>
         <td><%= user.address %></td>
-        <td><%= user.isAdmin %></td>
+            
+        <% } %>
+        <% if(user.isAdmin){ %>
+        <td>Administrator</td>
+        <% } else { %>
+          <td>User</td>
+        <% } %>
         <td><a class="btn btn-info form-control" href="/users/<%= user._id %>">Show</a></td>
-      </tr>
+       
+    
+          </tr>
+
       <% }); %>
-    </tbody>
   </table>
 
 		</div>
 	</div>
 </div>
+

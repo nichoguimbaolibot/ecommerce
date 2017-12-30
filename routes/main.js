@@ -1,10 +1,24 @@
 var express = require("express");
 var router = express.Router();
+var multer = require('multer');
 
 var User = require("../models/user");
 var Product = require("../models/product");
 var Cart = require("../models/cart");
 var Category = require("../models/category");
+
+var filename;
+var Storage = multer.diskStorage({
+    destination: function (req, file, callback) {
+        callback(null, __dirname + "/images");
+    },
+    filename: function (req, file, callback) {
+    	filename = file.fieldname + "_" + Date.now() + "_" + file.originalname;
+        callback(null, filename);
+    }
+});
+
+var upload = multer({ storage: Storage }).array("image", 1); //Field name and max count
 
 function paginate(req, res, next){
 		var perPage = 9;
@@ -78,7 +92,6 @@ stream.on("error", function(err){
 });
 
 router.get("/", function(req, res, next){
-	// if(req.user){
 		paginate(req, res, next);
 	// }else{
 	// res.render("main/home");
@@ -114,15 +127,46 @@ router.post("/product", function(req, res, next){
 		category: req.body.category,
 		name: req.body.name,
 		price: price,
-		image: req.body.image
 	};
+
 	Product.create(newProduct, function(err, product){
 		if(err){
 			console.log(err);
 		} else{
 			console.log(product);
-			res.redirect("/product");
+			return res.redirect("/product/new/" + product._id);
 		}
+	});
+});
+
+router.get("/product/new/:product_id", function(req, res, next){
+	Product.findOne({ _id : req.params.product_id}, function(err, product){
+		if(err){
+			console.log(err);
+		} else{
+			return res.render("main/upload", {product: product});
+		}
+
+	});
+});
+
+router.post("/product/new/:product_id", function(req, res, next){
+	Product.findOne({ _id : req.params.product_id}, function(err, product){
+		upload(req, res, function(err){
+			if(err){
+				console.log(err);
+			} else{
+				product.image = filename;
+				console.log("filename: " + product.image);
+				product.save(function(err){
+					if(err){
+						console.log(err);
+					} else{
+						return res.redirect("/product");
+					}
+				});
+			}
+		});
 	});
 });
 

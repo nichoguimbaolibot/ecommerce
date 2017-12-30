@@ -19,12 +19,12 @@ $(function(){
 					html += '<div class="col-md-4">';
 					html+= '<a style="text-decoration:none;" href="/product/' +  data[i]._id  + '">';
 					html+= '<div class="thumbnail">';
-					html+= '<img src="' +  data[i]._source.image  + '">';
+					html+= '<img src="http://localhost/nodejs/ecommerce/routes/images/' +  data[i]._source.image  + '">';
 					html+= '<div class="caption">';
 					html+= '<div class="text-center" id="pink-hover">';
 					html+= '<h3>' +  data[i]._source.name  + '</h3>';
 					html+= '<p>' +  data[i]._type  + '</p>';
-					html+= '<p>$' +  data[i]._source.price  + '</p>';
+					html+= '<p>Php ' +  data[i]._source.price.toFixed(2)  + '</p>';
 					html+= '</div>';
 					html += '<div class="text-center">';
 					html += '<form action="/product/' +  data[i]._id  + '" method="POST">';

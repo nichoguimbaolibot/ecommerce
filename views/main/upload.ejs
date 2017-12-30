@@ -1,0 +1,20 @@
+<% layout("layout") -%>
+<div class="container">
+	<div class="row">
+	<div class="col-md-4 col-xs-4"></div>
+	<div class="col-md-4 col-xs-4">
+	<div class="text-center">
+		<form enctype="multipart/form-data" action="/product/new/<%= product._id %>" method="POST">
+			<h1>Add new Image for <%= product.name %></h1>
+			<div class="form-group">
+				<input class="form-control" type="file" name="image" placeholder="upload your image...">
+			</div>
+
+			<div class="form-group">
+			<button class="btn btn-primary form-control">Submit</button>
+			</div>
+		</form>
+	</div>
+	</div>
+	</div>
+</div>

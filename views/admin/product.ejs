@@ -39,7 +39,7 @@
 	</thead>
 		<% product.forEach(function(product){ %>
 		<tr>
-			<td><div class="thumbnail"><img style="height:50px;width:50px;" src="<%= product.image %>"></div></td>
+			<td><div class="thumbnail"><img style="height:50px;width:50px;" src="http://localhost/nodejs/ecommerce/routes/images/<%= product.image %>"></div></td>
 			<td><%= product.name %></td>
 			<td>Php <%= product.price %></td>
 			<td><%= product.category.name %></td>

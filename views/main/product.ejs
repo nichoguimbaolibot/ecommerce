@@ -5,7 +5,7 @@
 	<div class="row">
 		<div class="col-md-9">
 			<div class="thumbnail">
-			<img src="<%= product.image %>">
+			<img src="http://localhost/nodejs/ecommerce/routes/images/<%= product.image %>">
 			</div>
 		</div>
 		<div class="col-md-3">
@@ -55,9 +55,10 @@
 			<%= moment(comment.createdA).fromNow() %>
 		</div>
 		</div>
-		
 			<a href="/product/<%= product._id %>/comments/<%= comment._id %>/edit" class="btn btn-warning">Edit</a>
-		
+			<form id="delete-form" action="/product/<%= product._id %>/comments/<%= comment._id %>?_method=DELETE" method="POST">
+				<button class="btn btn-danger">Delete</button>
+			</form>
 		<div class="form-group">
 		<strong><a><%= comment.author.email %></a></strong>
 		</div>

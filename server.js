@@ -18,6 +18,7 @@ var User = require("./models/user");
 var Category = require("./models/category");
 var Product = require("./models/product");
 var Cart = require("./models/cart");
+var Log = require("./models/log");
 var cartLength = require("./middlewares/middleware");
 
 mongoose.Promise = global.Promise;

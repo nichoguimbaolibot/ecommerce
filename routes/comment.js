@@ -38,6 +38,7 @@ router.post("/product/:id/comments", isUserLogin, function(req, res){
 				foundProduct.comments.push(comment);
 				foundProduct.save();
 				console.log(comment);
+				console.log(foundProduct);
 				return res.redirect("/product/" + foundProduct._id);
 			}
 		});
@@ -58,6 +59,17 @@ router.put("/product/:id/comments/:comment_id", function(req, res){
 		if(err){
 			console.log(err);
 		} else{
+			return res.redirect("/product/" + req.params.id);
+		}
+	});
+});
+
+router.delete("/product/:id/comments/:comment_id", function(req, res){
+	Comment.findByIdAndRemove(req.params.comment_id, function(err, comment){
+		if(err){
+			console.log(err);
+			res.redirect("back");
+		}else {
 			return res.redirect("/product/" + req.params.id);
 		}
 	});

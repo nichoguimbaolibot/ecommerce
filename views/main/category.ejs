@@ -22,7 +22,7 @@
 				<div class="text-center" id="pink-hover">
 					<h4><%= product.name %></h4>
 					<p><strong><%= product.category.name %></strong></p>
-					<p><strong>Php<%= product.price %></strong></p>
+					<p><strong>Php<%= product.price.toFixed(2) %></strong></p>
 				</div>
 				<div class="text-center">
 					<form action="/product/<%= product._id %>" method="POST">

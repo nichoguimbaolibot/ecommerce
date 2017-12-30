@@ -1,5 +1,6 @@
 var express = require("express");
 var router = express.Router();
+var multer = require("multer");
 var Category = require("../models/category");
 var Product = require("../models/product");
 var User = require("../models/user");
@@ -7,6 +8,19 @@ var Cart = require("../models/cart");
 var async = require("async");
 var passport = require("passport");
 var passportConfig = require("../config/passport");
+
+var filename;
+var Storage = multer.diskStorage({
+    destination: function (req, file, callback) {
+        callback(null, __dirname + "/images");
+    },
+    filename: function (req, file, callback) {
+    	filename = file.fieldname + "_" + Date.now() + "_" + file.originalname;
+        callback(null, filename);
+    }
+});
+
+var upload = multer({ storage: Storage }).array("image", 1); //Field name and max count
 
 function adminAuthentication(req, res, next){
 	if(req.isAuthenticated()){
@@ -146,12 +160,11 @@ router.get("/product/admin/:id/edit", adminAuthentication, function(req, res, ne
 
 router.put("/product/admin/:id", adminAuthentication, function(req, res, next){
 	
-	if(req.body.category && req.body.name && req.body.price && req.body.image){
+	if(req.body.category && req.body.name && req.body.price){
 			var newProduct = {
 			category : req.body.category,
 			name: req.body.name,
 			price: parseFloat(req.body.price),
-			image: req.body.image
 		};
 
 		Product.findByIdAndUpdate(req.params.id, newProduct, function(err, product){
@@ -160,15 +173,27 @@ router.put("/product/admin/:id", adminAuthentication, function(req, res, next){
 			} else{
 				console.log(product);
 				req.flash("signin", "successfully edited an item");
-				return res.redirect("/product/admin/" + req.params.id);
+				return res.redirect("/product/admin/" + req.params.id + "/edit/image");
 			}
 		});
 	} else{
 		req.flash("signin", "You leave an empty field");
-		return res.redirect("/product/admin");
+		return res.redirect("/product/admin/" + req.params.id + "/edit/image");
 	}
 
 });
+
+router.get("/product/admin/:id/edit/image", adminAuthentication, function(req, res, next){
+	Product
+	.findByIdAndUpdate(req.params.id)
+	.populate("category")
+	.exec(function(err, product){
+		if(err) return next(err);
+		res.render("admin/product-upload", {product: product});
+	});
+	
+});
+
 
 
 function escapeRegex(text){

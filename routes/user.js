@@ -73,6 +73,17 @@ router.post("/signup", function(req, res, next){
 });
 
 router.get("/logout", function(req, res, next){
+	User.findById(req.user._id, function(err, user){
+		user.logOut.push({
+			logout: Date.now()
+		});
+		user.save(function(err, result){
+			if(err) return next(err);
+			console.log(result);
+		});
+	});
+	
+
 	req.logout();
 	res.redirect("/");
 
@@ -90,7 +101,7 @@ router.get("/edit-profile", function(req, res, next){
 router.post("/edit-profile", function(req, res, next){
 	User.findOne({_id: req.user._id}, function(err, user){
 		if(err) return next(err);
-
+		if(req.body.email) user.email = req.body.email;
 		if(req.body.address) user.address = req.body.address;
 		if(req.body.month && req.body.day && req.body.year){
 			user.birthdate = new Date(req.body.year + "-" + req.body.month + "-" + req.body.day);
