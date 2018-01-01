@@ -1,6 +1,7 @@
 var mongoose = require("mongoose");
 var bcrypt = require("bcrypt-nodejs");
 var crypto = require("crypto");
+var moment = require("moment");
 var Schema = mongoose.Schema;
 
 
@@ -14,10 +15,14 @@ var UserSchema = new mongoose.Schema({
 		picture:{type: String, default:""}
 	},
 	address: String,
+	inbox: [{
+		type: Schema.Types.ObjectId,
+		ref: "Message"
+	}],
 	history: [{
-		date: Date,
-		paid: {type: Number, default: 0}
-		// item: {type: Schema.Types.ObjectId, ref: ""}
+		date: {type: Date, default: Date.now},
+		paid: {type: Number, default: 0},
+		item: {type: Schema.Types.ObjectId, ref: "Product"}
 	}],
 	isAdmin: {type : Boolean, default: false},
 	superUser: {type: Boolean, default: false}

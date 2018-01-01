@@ -16,7 +16,7 @@
 			<div class="form-group">
 			<a class="form-control btn btn-warning" href="/edit-profile">Edit Profile</a>
 			</div>
-			<% if(user.isAdmin || user.superUser === true){ %>
+			<% if(user.isAdmin || user.superUser){ %>
 				<div class="form-group">
 					<label class="text-center form-control">Admin Settings: </label>
 						<a href="/users" class="form-control btn btn-success">Users</a>
@@ -26,21 +26,27 @@
 		</div>
 		
 		<div class="col-sm-12 col-xs-12 col-md-9">
-			<table>
-				<thead>
-				</thead>
-				<tbody>
+			<div class="col-md-6">
+			<h2 class="text-center">History</h2>
+				<table class="table table-striped sticky-header">
+					<thead>
 					<tr>
-						
+						<th>Item's Name</th>
+						<th>Paid: </th>
+						<th>Date: </th>
 					</tr>
-					<tr>
-						
-					</tr>
-					<tr>
-
-					</tr>
-				</tbody>
-			</table>
+					<tbody>
+						<% for(var i = 0; i < user.history.length; i++){ %>
+							<tr>
+								<td><%= user.history[i].item.name %></td>
+								<td><%= user.history[i].paid %></td>
+								<td><%= moment(user.history[i].date) %></td>
+							</tr>
+						<% } %>
+					</tbody>
+					</thead>
+				</table>
+			</div>
 		</div>
 		
 	</div>

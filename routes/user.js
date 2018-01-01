@@ -1,5 +1,8 @@
 var express = require("express");
 var router = express.Router();
+var regions = require("philippines/regions");
+var provinces = require("philippines/provinces");
+var cities = require("philippines/cities");
 var User = require("../models/user");
 var Cart = require("../models/cart");
 var async = require("async");
@@ -21,12 +24,13 @@ router.post("/login", passport.authenticate("local-login", {
 });
 
 router.get("/profile", function(req, res){
-	User.findOne({ _id: req.user._id}, function(err, user){
+	User
+	.findOne({_id: req.user._id})
+	.populate('history.item')
+	.exec(function(err, user){
 		if(err) return next(err);
-
-		res.render("accounts/profile", {user: user});
-
-	})
+		res.render('accounts/profile', {user : user});
+	});
 });
 
 router.get("/signup", function(req, res){
@@ -74,9 +78,6 @@ router.post("/signup", function(req, res, next){
 
 router.get("/logout", function(req, res, next){
 	User.findById(req.user._id, function(err, user){
-		user.logOut.push({
-			logout: Date.now()
-		});
 		user.save(function(err, result){
 			if(err) return next(err);
 			console.log(result);
@@ -91,30 +92,37 @@ router.get("/logout", function(req, res, next){
 
 router.get("/edit-profile", function(req, res, next){
 	var month = ["January","February","March","April","May","June","July", "August", "September", "October", "November", "December"];
+	var city = cities;
+	var province = provinces;
 	User.findById(req.user._id, function(err, user){
 		if(err) return next(err);
 	var getMonth = month[parseInt(user.birthdate.getMonth())];
-	res.render("accounts/edit-profile", {message: req.flash("success"), user: user, getMonth: getMonth, errors: req.flash("errors")});
+	res.render("accounts/edit-profile", {message: req.flash("success"), user: user, getMonth: getMonth, city: city, province: province, errors: req.flash("errors")});
 	});
 });
 
 router.post("/edit-profile", function(req, res, next){
 	User.findOne({_id: req.user._id}, function(err, user){
 		if(err) return next(err);
-		if(req.body.email) user.email = req.body.email;
 		if(req.body.address) user.address = req.body.address;
 		if(req.body.month && req.body.day && req.body.year){
 			user.birthdate = new Date(req.body.year + "-" + req.body.month + "-" + req.body.day);
 		}
+		if(req.body.currentPass){
 		if(!user.comparePassword(req.body.currentPass)){
 			req.flash("errors", "You have entered a wrong password");
 			return res.redirect("/edit-profile");
 		}
+		}
+		if(req.body.password && req.body.confirmPass){
 		if(!(req.body.password === req.body.confirmPass)){
 			req.flash("errors", "Your new password and confirm password does not match");
 			return res.redirect("/edit-profile");
 		}
+		}
+		if(req.body.password){
 		user.password = req.body.password;
+		}
 		user.save(function(err){
 			if(err) return next(err);
 			req.flash("success", "You successfully edit your profile");
