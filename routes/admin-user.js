@@ -5,7 +5,6 @@ var Product = require("../models/product");
 var User = require("../models/user");
 var Cart = require("../models/cart");
 var async = require("async");
-var backup = require("mongodb-backup");
 var passport = require("passport");
 var passportConfig = require("../config/passport");
 
