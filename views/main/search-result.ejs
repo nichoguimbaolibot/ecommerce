@@ -24,7 +24,7 @@
 				<div class="text-center" id="pink-hover">
 					<h3><%= product._source.name %></h3>
 					<p><%= product._type %></p>
-					<p>$<%= product._source.price %></p>
+					<p><strong>Php <%= product._source.price %></strong> </p>
 				</div>
 				<div class="text-center">
 					<form action="/product/<%= product._id %>" method="POST">

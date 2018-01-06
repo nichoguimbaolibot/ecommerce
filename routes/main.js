@@ -174,18 +174,21 @@ router.post("/product/new/:product_id", function(req, res, next){
 
 router.post("/product/:product_id", function(req, res, next){
 	if(req.user._id){
+	Product.findById(req.body.product_id, function(err, product){
+		console.log("product: " + product);
 	Cart.findOne({owner : req.user._id}, function(err, cart){
 		cart.items.push({
 			item: req.body.product_id,
-			price: parseFloat(req.body.priceValue),
+			price: parseFloat(product.price),
 			quantity: parseInt(req.body.quantity)
 		});
-		cart.total = (cart.total + parseFloat(req.body.priceValue)).toFixed(2);
+		cart.total = (cart.total + parseFloat(product.price * req.body.quantity)).toFixed(2);
 		cart.save(function(err){
 			if(err) return next(err);
 			return res.redirect("back");
 			});
 		});
+	});
 	} else{
 		req.flash("message", "You need to signup in order to do that");
 		return res.redirect("/signup");	

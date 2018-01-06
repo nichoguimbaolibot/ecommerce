@@ -1,7 +1,8 @@
+
+
+
 $(function(){
-
-
-
+Stripe.setPublishableKey('pk_test_Z5440ddW8B1ffHEcjsuUrQJC');
 
 	$("#search").keyup(function(){
 		var search_term = $(this).val();
@@ -25,7 +26,7 @@ $(function(){
 					html+= '<div class="thumbnail">';
 					if(product.image.search("http://lorempixel.com") === 0){
 						html+= '<img src="' +  data[i]._source.image  + '">';
-					else{
+					}else{
 					html+= '<img src="http://localhost/nodejs/ecommerce/routes/images/' +  data[i]._source.image  + '">';
 					}
 					html+= '<div class="caption">';
@@ -60,7 +61,6 @@ $(function(){
 
 
 });
-Stripe.setPublishableKey('pk_test_Z5440ddW8B1ffHEcjsuUrQJC');
 
 
 $(document).on("click", "#plus", function(e){
