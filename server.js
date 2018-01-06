@@ -73,6 +73,6 @@ app.use(commentRoutes);
 app.use("/api", apiRoutes);
 
 
-app.listen(secret.port, function(){
+app.listen(process.env.PORT || 3000, function(){
 	console.log("Server is starting in " + secret.port);
 });

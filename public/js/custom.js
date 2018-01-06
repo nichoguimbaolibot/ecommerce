@@ -23,7 +23,11 @@ $(function(){
 					html += '<div class="col-md-4">';
 					html+= '<a style="text-decoration:none;" href="/product/' +  data[i]._id  + '">';
 					html+= '<div class="thumbnail">';
+					if(product.image.search("http://lorempixel.com") === 0){
+						html+= '<img src="' +  data[i]._source.image  + '">';
+					else{
 					html+= '<img src="http://localhost/nodejs/ecommerce/routes/images/' +  data[i]._source.image  + '">';
+					}
 					html+= '<div class="caption">';
 					html+= '<div class="text-center" id="pink-hover">';
 					html+= '<h3>' +  data[i]._source.name  + '</h3>';
