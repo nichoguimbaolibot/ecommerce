@@ -30,7 +30,11 @@
 			<a style="text-decoration: none;" href="/product/<%= product._id %>">
 			<div class="image">
 			<div class="thumbnail">
+			<% if(product.image.search("http://lorempixel.com") === 0){ %>
+				<img src="<%= product.image %>">
+			<% }else{ %>
 				<img src="http://localhost/nodejs/ecommerce/routes/images/<%= product.image %>">
+			<% } %>
 				<div class="caption">
 				<div id="pink-hover" class="text-center">
 					<h4><%= product.name %></h4>

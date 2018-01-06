@@ -19,5 +19,30 @@
 			</form>
 			</div>
 		</div>
+
+		<div class="col-sm-12 col-xs-12 col-md-9">
+			<div class="col-md-6">
+			<h2 class="text-center">History</h2>
+				<table class="table table-striped sticky-header">
+					<thead>
+					<tr>
+						<th>Item's Name</th>
+						<th>Paid: </th>
+						<th>Date: </th>
+					</tr>
+					<tbody>
+						<% for(var i = 0; i < user.history.length; i++){ %>
+							<tr>
+								<td><%= user.history[i].item.name %></td>
+								<td><%= user.history[i].paid %></td>
+								<td><%= moment(user.history[i].date) %></td>
+							</tr>
+						<% } %>
+					</tbody>
+					</thead>
+				</table>
+			</div>
+		</div>
+
 	</div>
 </div>

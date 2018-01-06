@@ -5,13 +5,17 @@
 	<div class="row">
 		<div class="col-md-9">
 			<div class="thumbnail">
-			<img src="http://localhost/nodejs/ecommerce/routes/images/<%= product.image %>">
+			<% if(product.image.search("http://lorempixel.com") === 0){ %>
+				<img src="<%= product.image %>">
+			<% }else{ %>
+				<img src="http://localhost/nodejs/ecommerce/routes/images/<%= product.image %>">
+			<% } %>
 			</div>
 		</div>
 		<div class="col-md-3">
 		<div class="text-center">
 			<h3><%= product.name %></h3>
-			<h1>$ <%= product.price.toFixed(2) %></h1>
+			<h1>Php <%= product.price.toFixed(2) %></h1>
 				<div class="form-group">
 				<div class="btn-group" role="group" aria-label="...">
 					<input type="hidden" name="quantity" id="quantity" value="1"> 
