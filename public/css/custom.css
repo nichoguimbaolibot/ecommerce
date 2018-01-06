@@ -128,7 +128,17 @@ footer{
     border-top:1px solid rgba(0,0,0,0.08);
   }
   .form-signin-heading {
-    color: #9b719a;
+    color: /*#9b719a*/ black;
     text-align: center;
     text-shadow: 0 2px 2px rgba(0,0,0,0.5);
   }
+
+  .square{
+	background-color: white;
+	width: 150%;
+	padding-bottom: 30%;
+	float:left;
+	margin:1.66%;
+	border-radius: 15%;
+	box-shadow: 0 2px 2px rgba(0,0,0,0.5);
+}
