@@ -34,6 +34,7 @@
 								<form action="/remove" method="POST">
 									<input type="hidden" name="item" value="<%= foundCart._id %>">
 									<input type="hidden" name="price" value="<%= foundCart.price %>">
+									<input type="hidden" name="quantity" value="<%= foundCart.quantity %>">
 									<button class="btn btn-danger btn-sm">Remove</button>
 								</form>
 							</div>
