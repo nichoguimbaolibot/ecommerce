@@ -296,6 +296,10 @@ router.get("/product/:id", function(req, res, next){
 router.post("/payment", isCartAccess, function(req, res, next){
 	var stripeToken = req.body.stripeToken;
 	var currentCharges = Math.round(req.body.stripeMoney * 100);
+	if(req.user.address === undefined){
+		req.flash("remove", "You need to have an address to continue the transaction. Please go to your profile settings and provide a full address.")
+		return res.redirect("/cart");
+	}
 	console.log("Token: " + stripeToken);
 	stripe.customers.create({
 		source: stripeToken

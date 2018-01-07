@@ -12,6 +12,7 @@
 				<%= message %>
 			</div>
 		<% } %>
+		
 			<% foundCart.items.forEach(function(foundCart){ %>
 				<div class="list-group">
 					<span class="list-group-item">
@@ -50,11 +51,12 @@
 			<div class="list-group">
 				<span class="list-group-item">
 					<h4>Total: Php<span class="totalPrice"><%= foundCart.total %></span></h4>
-
+					<% if(foundCart.total > 0){ %>
 					<div class="form-group">
 						<input type="hidden" name="<%= foundCart.total %>">
 						<button type="submit" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal">Pay with Stripe</button>
 					</div>
+					<% } %>
 				</span>
 			</div>			
 		</div>
