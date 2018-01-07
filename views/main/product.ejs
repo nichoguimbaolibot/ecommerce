@@ -59,10 +59,12 @@
 			<%= moment(comment.createdA).fromNow() %>
 		</div>
 		</div>
+		<% if(author.id === req.user._id || req.user.superUser){ %>
 			<a href="/product/<%= product._id %>/comments/<%= comment._id %>/edit" class="btn btn-warning">Edit</a>
 			<form id="delete-form" action="/product/<%= product._id %>/comments/<%= comment._id %>?_method=DELETE" method="POST">
 				<button class="btn btn-danger">Delete</button>
 			</form>
+		<% } %>
 		<div class="form-group">
 		<strong><a><%= comment.author.email %></a></strong>
 		</div>
