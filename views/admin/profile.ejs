@@ -31,11 +31,11 @@
 						<th>Date: </th>
 					</tr>
 					<tbody>
-						<% for(var i = 0; i < user.history.length; i++){ %>
+						<% for(var i = 0; i < history.length; i++){ %>
 							<tr>
-								<td><%= user.history[i].item.name %></td>
-								<td><%= user.history[i].paid %></td>
-								<td><%= moment(user.history[i].date) %></td>
+								<td><%= history[i].item.name %></td>
+								<td><%= history[i].paid %></td>
+								<td><%= moment(history[i].date) %></td>
 							</tr>
 						<% } %>
 					</tbody>

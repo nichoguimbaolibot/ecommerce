@@ -23,7 +23,7 @@ Stripe.setPublishableKey('pk_test_Z5440ddW8B1ffHEcjsuUrQJC');
 					var html = "";
 					html += '<div class="col-md-4">';
 					html+= '<a style="text-decoration:none;" href="/product/' +  data[i]._id  + '">';
-					html+= '<div class="thumbnail">';
+					html+= '<div style="box-shadow: none;border-radius: 10px;border:1px solid ;background-color: rgba(255, 255, 255,0.8);" class="thumbnail">';
 					if(product.image.search("http://lorempixel.com") === 0){
 						html+= '<img src="' +  data[i]._source.image  + '">';
 					}else{
@@ -151,6 +151,8 @@ $('#payment-form').submit(function(event){
 
 	Stripe.card.createToken($form, stripeResponseHandler)
 });
+
+$('.carousel').carousel();
 
 
 

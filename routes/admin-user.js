@@ -4,6 +4,7 @@ var Category = require("../models/category");
 var Product = require("../models/product");
 var User = require("../models/user");
 var Cart = require("../models/cart");
+var History = require("../models/history");
 var async = require("async");
 var passport = require("passport");
 var passportConfig = require("../config/passport");
@@ -257,13 +258,28 @@ router.post("/users", adminAuthentication, function(req, res, next){
 // });
 
 router.get("/users/:id", adminAuthentication, function(req, res, next){
-	User.findById(req.params.id, function(err, user){
-		if(err){
-			console.log(err);
-		} else{
-			res.render("admin/profile", {user : user});
+	async.waterfall([
+		function(callback){
+			User
+			.findById({_id: req.params.id})
+			.populate('history')
+			.exec(function(err, user){
+				if(err) return next(err);
+				console.log(user);
+				callback(null, user);
+			});
+		}, function(user){
+			History
+			.find({customer: user.email})
+			.populate('item')
+			.exec(function(err, history){
+				if(err){
+					console.log(err);
+				} 
+				res.render('admin/profile', {user: user, history: history});
+			});
 		}
-	});
+		]);
 });
 
 router.delete("/users/:id", adminAuthentication, function(req, res, next){

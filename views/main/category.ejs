@@ -16,7 +16,7 @@
 	<% products.forEach(function(product){ %>
 		<div class="col-md-4">
 			<a style="text-decoration: none;" href="/product/<%= product._id %>">
-			<div class="thumbnail">
+			<div style="box-shadow: none;border-radius: 10px;border:1px solid ;background-color: rgba(255, 255, 255,0.8);" class="thumbnail">
 				<% if(product.image.search("http://lorempixel.com") === 0){ %>
 				<img src="<%= product.image %>">
 			<% }else{ %>

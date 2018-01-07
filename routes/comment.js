@@ -39,6 +39,8 @@ router.post("/product/:id/comments", isUserLogin, function(req, res){
 				foundProduct.save();
 				console.log(comment);
 				console.log(foundProduct);
+				console.log(foundProduct.comments);
+
 				return res.redirect("/product/" + foundProduct._id);
 			}
 		});

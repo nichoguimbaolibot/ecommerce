@@ -1,0 +1,24 @@
+<% layout('layout') -%>
+
+<div class="container">
+	<div class="row">
+		<table class="table table-bordered">
+			<thead>
+				<th>Customer</th>
+				<th>Item Name</th>
+				<th>Paid</th>
+				<th>Date</th>
+			</thead>
+			<% if(history.length === 0){ %>
+			<% history.forEach(function(history){ %>
+			<tr>
+				<td><%= history.customer %></td>
+				<td><%= history.item.name %></td>
+				<td><%= history.paid %></td>
+				<td><%= history.date %></td>
+			</tr>
+			<% }); %>
+			<% } %>
+		</table>
+	</div>
+</div>

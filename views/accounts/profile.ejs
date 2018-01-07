@@ -21,6 +21,7 @@
 					<label class="text-center form-control">Admin Settings: </label>
 						<a href="/users" class="form-control btn btn-success">Users</a>
 						<a href="/product" class="form-control btn btn-success">Product</a>
+						<a href="/history" class="form-control btn btn-success">Transaction History</a>
 				</div>
 			<% } %>
 		</div>
@@ -36,12 +37,14 @@
 						<th>Date: </th>
 					</tr>
 					<tbody>
-						<% for(var i = 0; i < user.history.length; i++){ %>
+					<% if(history.length){ %>
+						<% for(var i = 0; i < 10; i++){ %>
 							<tr>
-								<td><%= user.history[i].item.name %></td>
-								<td><%= user.history[i].paid %></td>
-								<td><%= moment(user.history[i].date) %></td>
+								<td><%= history[i].item.name %></td>
+								<td><%= history[i].paid %></td>
+								<td><%= moment(history[i].date) %></td>
 							</tr>
+						<% } %>
 						<% } %>
 					</tbody>
 					</thead>

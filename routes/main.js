@@ -5,6 +5,7 @@ var User = require("../models/user");
 var Product = require("../models/product");
 var Cart = require("../models/cart");
 var Category = require("../models/category");
+var History = require("../models/history");
 var async = require('async');
 var stripe = require("stripe")('sk_test_S62DppIR052fLWCke3QoR0OF');
 
@@ -315,15 +316,31 @@ router.post("/payment", isCartAccess, function(req, res, next){
 				User.findOne({_id : req.user._id}, function(err, user){
 					if(user){
 						for(var i = 0; i < cart.items.length; i++) {
-							user.history.push({
+							var history = {
+								customer: req.user.email,
 								item: cart.items[i].item,
 								paid: cart.items[i].price
-							});
-						}
-						user.save(function(err, user){
+							};
+							History.create(history, function(err, history){
+							if(err){
+								console.log(err);
+							}else{
+							user.history.push(history);
+							console.log(user);
+							user.save(function(err, user){
 							if(err) return next(err);
-							callback(err, user);
+							console.log("user: " + user)
 						});
+							}
+						});
+							// {
+							// 	customer: req.user.email,
+							// 	item: cart.items[i].item,
+							// 	paid: cart.items[i].price
+							// }
+						
+						}
+							callback(err, user);
 					}
 				});
 			}, function(user) {

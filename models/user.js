@@ -20,9 +20,8 @@ var UserSchema = new mongoose.Schema({
 		ref: "Message"
 	}],
 	history: [{
-		date: {type: Date, default: Date.now},
-		paid: {type: Number, default: 0},
-		item: {type: Schema.Types.ObjectId, ref: "Product"}
+		type: Schema.Types.ObjectId,
+		ref: "History"
 	}],
 	isAdmin: {type : Boolean, default: false},
 	superUser: {type: Boolean, default: false}

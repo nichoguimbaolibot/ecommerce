@@ -5,6 +5,8 @@ var provinces = require("philippines/provinces");
 var cities = require("philippines/cities");
 var User = require("../models/user");
 var Cart = require("../models/cart");
+var Product= require("../models/product");
+var History = require("../models/history");
 var async = require("async");
 var passport = require("passport");
 var passportConfig = require("../config/passport");
@@ -24,13 +26,35 @@ router.post("/login", passport.authenticate("local-login", {
 });
 
 router.get("/profile", function(req, res){
-	User
-	.findOne({_id: req.user._id})
-	.populate('history.item')
-	.exec(function(err, user){
-		if(err) return next(err);
-		res.render('accounts/profile', {user : user});
-	});
+	// User
+	// .findOne({_id: req.user._id})
+	// .populate('history.item')
+	// .exec(function(err, user){
+	// 	if(err) return next(err);
+	// 	res.render('accounts/profile', {user : user});
+	// });
+	async.waterfall([
+		function(callback){
+			User
+			.findById({_id: req.user._id})
+			.populate('history')
+			.exec(function(err, user){
+				if(err) return next(err);
+				console.log(user);
+				callback(null, user);
+			});
+		}, function(user){
+			History
+			.find({customer: req.user.email})
+			.populate('item')
+			.exec(function(err, history){
+				if(err){
+					console.log(err);
+				} 
+				res.render('accounts/profile', {user: user, history: history});
+			});
+		}
+		]);
 });
 
 router.get("/signup", function(req, res){

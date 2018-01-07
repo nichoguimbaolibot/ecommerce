@@ -5,6 +5,7 @@ var Category = require("../models/category");
 var Product = require("../models/product");
 var User = require("../models/user");
 var Cart = require("../models/cart");
+var History = require("../models/history");
 var async = require("async");
 var passport = require("passport");
 var passportConfig = require("../config/passport");
@@ -190,6 +191,19 @@ router.get("/product/admin/:id/edit/image", adminAuthentication, function(req, r
 	.exec(function(err, product){
 		if(err) return next(err);
 		res.render("admin/product-upload", {product: product});
+	});
+	
+});
+
+router.get("/history", function(req, res, next){
+	History
+	.find()
+	.populate('item')
+	.exec(function(err, history){
+		if(err){
+			console.log(err);
+		} 
+		res.render("admin/history", {history : history});
 	});
 	
 });
