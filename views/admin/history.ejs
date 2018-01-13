@@ -9,7 +9,7 @@
 				<th>Paid</th>
 				<th>Date</th>
 			</thead>
-			<% if(history.length === 0){ %>
+			<% if(history.length > 0){ %>
 			<% history.forEach(function(history){ %>
 			<tr>
 				<td><%= history.customer %></td>

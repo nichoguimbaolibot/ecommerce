@@ -19,7 +19,11 @@
 						<div class="row">
 							<div class="col-md-3">
 							<a href="/product/<%= foundCart.item._id  %>">
+				<% if(foundCart.item.image.search("http://lorempixel.com") === 0){%>
+							<span><img class="product-image" src="<%= foundCart.item.image %>"></span>
+						<% }else{ %>
 								<span><img class="product-image" src="http://localhost/nodejs/ecommerce/routes/images/<%= foundCart.item.image %>"></span>
+							<% } %>
 							</a>
 							</div>
 							<div class="col-md-6">

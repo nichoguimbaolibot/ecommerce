@@ -21,13 +21,17 @@
 				<%= error %>
 			</div>
 		<% } %>	
+		<div>
 		<form method="POST">
 		<h1 style="text-align: center;">Add a new Category</h1>
 			<div class="form-group">
 				<label for="name">Name:</label>
 				<input class="form-control" type="text" name="name" placeholder="name">
 			</div>
-			<button class="btn btn-success">Submit</button>
+			<button class="btn btn-success form-control">Submit</button>
 		</form>
+			<a href="/product" class="btn btn-default pull-right form-control">Go Back</a>
+		</div>
+
 	</div>
 </div>

@@ -37,8 +37,8 @@
 						<th>Date: </th>
 					</tr>
 					<tbody>
-					<% if(history.length){ %>
-						<% for(var i = 0; i < 10; i++){ %>
+					<% if(history.length > 0){ %>
+						<% for(var i = 0; i < history.length; i++){ %>
 							<tr>
 								<td><%= history[i].item.name %></td>
 								<td><%= history[i].paid %></td>

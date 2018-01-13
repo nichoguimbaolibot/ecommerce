@@ -349,9 +349,7 @@ router.post("/payment", isCartAccess, function(req, res, next){
 				});
 			}, function(user) {
 				Cart.update({ owner: user._id}, {$set: {items: [], total: 0}}, function(err, updated){
-					if(updated){
 						return res.redirect("/profile");
-					}
 				});
 			}
 			]);

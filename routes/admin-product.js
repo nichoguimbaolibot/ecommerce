@@ -93,10 +93,22 @@ router.put("/edit-category/:id", adminAuthentication, function(req, res, next){
 });
 
 router.delete("/edit-category/:id", adminAuthentication, function(req, res, next){
-	Category.findByIdAndRemove(req.params.id, function(err, product){
-		if(err) return next(err);
-		return res.redirect("/product");
+	Product.remove({category: req.params.id}, function(err, product){
+		if(err){
+			console.log(err);
+			return res.redirect("/product");
+		} 
+		console.log(product);
+		Category.findByIdAndRemove(req.params.id, function(err, category){
+			console.log(category);
+			if(err) return next(err);
+			return res.redirect("/product");
+		});
 	});
+	// Category.findByIdAndRemove(req.params.id, function(err, product){
+	// 	if(err) return next(err);
+	// 	return res.redirect("/product");
+	// });
 });
 
 router.get("/product", adminAuthentication, function(req, res, next){
@@ -190,12 +202,12 @@ router.get("/product/admin/:id/edit/image", adminAuthentication, function(req, r
 	.populate("category")
 	.exec(function(err, product){
 		if(err) return next(err);
-		res.render("admin/product-upload", {product: product});
+		return res.render("admin/product-upload", {product: product});
 	});
 	
 });
 
-router.get("/history", function(req, res, next){
+router.get("/history", adminAuthentication, function(req, res, next){
 	History
 	.find()
 	.populate('item')
@@ -203,7 +215,7 @@ router.get("/history", function(req, res, next){
 		if(err){
 			console.log(err);
 		} 
-		res.render("admin/history", {history : history});
+		return res.render("admin/history", {history : history});
 	});
 	
 });
